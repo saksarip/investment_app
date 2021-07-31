@@ -1,1 +1,2 @@
-# investment_app
+# Our investment app
+
