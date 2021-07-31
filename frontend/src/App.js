@@ -4,33 +4,20 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 
 function App() {
-  const [getMessage, setGetMessage] = useState({})
+  const [currentTime, setCurrentTime] = useState(0);
 
-  useEffect(()=>{
-    axios.get('https://react-flask-tutorial.herokuapp.com/flask/hello').then(response => {
-      console.log("SUCCESS", response)
-      setGetMessage(response)
-    }).catch(error => {
-      console.log(error)
-    })
-
-    // axios.get('http://localhost:5000/flask/hello').then(response => {
-    //   console.log("SUCCESS", response)
-    //   setGetMessage(response)
-    // }).catch(error => {
-    //   console.log(error)
-    // })
-
-  }, [])
+  useEffect(() => {
+    fetch('/time').then(res => res.json()).then(data => {
+      setCurrentTime(data.time);
+    });
+  }, []);
+  
   return (
     <div className="App">
       <header className="App-header">
         <img src={logo} className="App-logo" alt="logo" />
         <p>React + Flask Tutorial</p>
-        <div>{getMessage.status === 200 ? 
-          <h3>{getMessage.data.message}</h3>
-          :
-          <h3>LOADING</h3>}</div>
+        <p>The current time is {currentTime}.</p>
       </header>
     </div>
   );

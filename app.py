@@ -1,14 +1,11 @@
-from flask import Flask, send_from_directory
-from flask_restful import Api, Resource, reqparse
-#from flask_cors import CORS #comment this on deployment
-from api.HelloApiHandler import HelloApiHandler
+import time
+from flask import Flask
 
-app = Flask(__name__, static_url_path='', static_folder='frontend/build')
-#CORS(app) #comment this on deployment
-api = Api(app)
+app = Flask(__name__)
 
-@app.route("/", defaults={'path':''})
-def serve(path):
-    return send_from_directory(app.static_folder,'index.html')
+@app.route('/time')
+def get_current_time():
+    return {'time': 55}
 
-api.add_resource(HelloApiHandler, '/flask/hello')
+if __name__ == '__main__':
+    app.run(port=5000, debug=True)
